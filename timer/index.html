@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/static/favicon/dreamy-bohr-logo.png"/>
+    <title>Timer</title>
+</head>
+<body>
+    <h1>Rubic's cube timer.</h1>
+        <p><strong><u>Start:</u></strong> on the release of the spacebar.
+            <strong><u>Stop:</u></strong> on press of the spacebar. </p>
+    <button id="scramble-btn">Get scramble:</button> <span id="scramble"></span>
+    <div class="main">
+        
+        <div id="time"></div>
+    </div>
+</body>
+    <style type="text/css">
+        body{
+            font-family: Helvetica;
+        }
+        .main{
+            position:absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #time{
+            font-size: 80px;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        let spn = document.getElementById('time');
+        var t = 0;
+        let d;
+        let diff;
+        document.onkeydown = function(e){
+            if (t !== 0 && e.key == " "){
+                d = new Date();
+                diff = d.getTime() - t
+                spn.innerHTML = diff /1000;
+                t = 0
+            };
+        };
+        document.onkeyup = function(e){
+            if (t == 0 && e.key == " "){
+                d = new Date();
+                t = d.getTime();
+            };
+        };
+        document.getElementById("scramble-btn").onclick = () =>{
+            const http = new XMLHttpRequest();
+            const url='https://rb.orten.workers.dev/';
+            http.open("GET", url);
+            http.send();
+
+            http.onreadystatechange = (e) => {
+              document.getElementById("scramble").innerHTML = "<strong>"+http.responseText.slice(35, -5)+"</strong>"
+            }
+
+        }
+        
+    </script>
+</html>
