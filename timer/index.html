@@ -52,15 +52,30 @@
             };
         };
         document.getElementById("scramble-btn").onclick = () =>{
-            const http = new XMLHttpRequest();
-            const url='https://rb.orten.workers.dev/';
-            http.open("GET", url);
-            http.send();
+            document.getElementById("scramble").innerHTML = "<strong>"+scramble()+"</strong>"
+        }
+        function scramble(){
+            let l = [
+                "U",  "D",  "R",  "L",  "B",  "F",
+                "U'", "D'", "R'", "L'", "B'", "F'",
+                "U2", "D2", "R2", "L2", "B2", "F2",
+            ]
+            let s;
+            let moves = 25
+            let out = [" "]
 
-            http.onreadystatechange = (e) => {
-              document.getElementById("scramble").innerHTML = "<strong>"+http.responseText.slice(35, -5)+"</strong>"
+            let t = 0
+            while (t < moves){
+
+                s = [l[Math.floor(Math.random() * 18)]]
+                if (s[0][0] === out[out.length-1][0][0]){
+
+                    continue
+                }
+                out.push(s)
+                t += 1
             }
-
+            return out.join(" ").slice(2)
         }
         
     </script>
