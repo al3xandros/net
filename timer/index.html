@@ -13,7 +13,7 @@
     <a href="/">Home / Start Page</a> <br>
     <button id="scramble-btn">Get scramble:</button> <span id="scramble"></span>
     <div class="main">
-        <div id="strt"></div>
+        <div id="strt"><h2>On release start the timer.</h2></div>
         <div id="time"></div>
     </div>
 </body>
@@ -35,6 +35,7 @@
     <script type="text/javascript">
         let spn = document.getElementById('time');
         let strt = document.getElementById('strt');
+        let started = false;
         var t = 0;
         let d;
         let diff;
@@ -42,16 +43,25 @@
             if (t !== 0 && e.key == " "){
                 d = new Date();
                 diff = d.getTime() - t
-                spn.innerHTML = diff /1000;
+                if (started){
+                    spn.innerHTML = diff /1000;
+                }
                 t = 0
-                strt.innerHTML = "<h2>Press to start timer.</h2>"
+                strt.innerHTML = "<h2>On release start the timer.</h2>"
+                started = !started
             };
         };
         document.onkeyup = function(e){
             if (t == 0 && e.key == " "){
                 d = new Date();
                 t = d.getTime();
-                strt.innerHTML = "<h2>Press to stop timer.</h2>"
+                if (started){
+                    strt.innerHTML = "<h2>Press to stop timer.</h2>"
+                    spn.innerHTML = ""
+                    return
+                }
+
+                
             };
         };
         document.getElementById("scramble-btn").onclick = () =>{
